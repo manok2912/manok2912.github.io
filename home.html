@@ -1,0 +1,136 @@
+<html>
+    
+<head>
+    <title>Yahtzee</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+</head>
+    
+<body>
+<div class="container mt-5">
+    <div class="row no-gutters">
+        <div class="col align-self-start"><p class="text-center">In the game of Yahtzee, a <span class="font-italic">five-of-a-kind</span>, where all dice show the same value, which is the futile-scoring game</p></div>
+        <div class="col align-self-center"><h1 class="display-3 text-center">Yahtzee</h1></div>
+        <div class="col align-items-end"><p class="text-right badge badge-light badge-pill mt-2">probability of getting yahtzee = 0.08 %</p></div>
+    </div>
+    
+    <hr>  
+    <div class="row">
+        <div class="col">
+            <div class="row no-gutters mb-5">
+                <div class="col-8">
+                    <h1 class="text-right text-capitalize">Machine</h1>
+                </div>
+                <div class="col-4">
+                    <h5><span class="count badge badge-pill badge-secondary text-left">count</span></h5>
+                </div>
+            </div>
+            <div class="row no-gutters m-5">
+                <div class="col col-md-2"><h3 class="border border-dark rounded p-3" id="compd1" style="display: inline">0</h3></div>
+                <div class="col col-md-2"><h3 class="border border-dark rounded p-3" id="compd2" style="display: inline">0</h3></div>
+                <div class="col col-md-2"><h3 class="border border-dark rounded p-3" id="compd3" style="display: inline">0</h3></div>
+                <div class="col col-md-2"><h3 class="border border-dark rounded p-3" id="compd4" style="display: inline">0</h3></div>
+                <div class="col col-md-2"><h3 class="border border-dark rounded p-3" id="compd5" style="display: inline">0</h3></div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row no-gutters mb-5">
+                <div class="col-7">
+                    <h1 class="text-right text-capitalize">human</h1>
+                </div>
+                <div class="col-5">
+                    <h5><span class="count badge badge-pill badge-secondary text-left">count</span></h5>
+                </div>
+            </div>
+            <div class="row no-gutters m-5">
+                <div class="col col-md-2"><h3 class="border border-dark rounded p-3" id="humand1" style="display: inline">0</h3></div>
+                <div class="col col-md-2"><h3 class="border border-dark rounded p-3" id="humand2" style="display: inline">0</h3></div>
+                <div class="col col-md-2"><h3 class="border border-dark rounded p-3" id="humand3" style="display: inline">0</h3></div>
+                <div class="col col-md-2"><h3 class="border border-dark rounded p-3" id="humand4" style="display: inline">0</h3></div>
+                <div class="col col-md-2"><h3 class="border border-dark rounded p-3" id="humand5" style="display: inline">0</h3></div>
+            </div>
+        </div>
+    </div>      
+    <hr>
+    <div class="row row-cols-1">
+        <div class="col text-center mb-2"><input type="button" onclick="roll()" value="ROLL" class="btn btn-dark btn-lg"></div>
+        <div class="col text-center mt-2"><input type="button" value="reset" onclick="location.reload()" class="btn btn-outline-dark btn-sm"></div>
+    </div>
+    
+    <h4 id="again"></h4>
+</div>    
+    
+    
+    
+
+<script>
+var computer = new Array();
+var human = new Array();    
+var count = 1;    
+function human_and_computer_push(){
+    computer.push(Math.floor(Math.random() * 6) + 1);
+    computer.push(Math.floor(Math.random() * 6) + 1);
+    computer.push(Math.floor(Math.random() * 6) + 1);
+    computer.push(Math.floor(Math.random() * 6) + 1);
+    computer.push(Math.floor(Math.random() * 6) + 1);
+    human.push(Math.floor(Math.random() * 6) + 1);
+    human.push(Math.floor(Math.random() * 6) + 1);
+    human.push(Math.floor(Math.random() * 6) + 1);
+    human.push(Math.floor(Math.random() * 6) + 1);
+    human.push(Math.floor(Math.random() * 6) + 1);
+    document.getElementById("compd1").innerHTML = computer[0];
+    document.getElementById("compd2").innerHTML = computer[1];
+    document.getElementById("compd3").innerHTML = computer[2];
+    document.getElementById("compd4").innerHTML = computer[3];
+    document.getElementById("compd5").innerHTML = computer[4];
+    document.getElementById("humand1").innerHTML = human[0];
+    document.getElementById("humand2").innerHTML = human[1];
+    document.getElementById("humand3").innerHTML = human[2];
+    document.getElementById("humand4").innerHTML = human[3];
+    document.getElementById("humand5").innerHTML = human[4];   
+}
+function human_and_computer_pop(){
+    computer.splice(0,computer.length);
+    human.splice(0,human.length);
+}  
+    
+function human_check(h){
+  return h == human[0];
+}
+    
+function computer_check(c){
+    return c == computer[0];   
+}
+    
+function roll(){
+
+    human_and_computer_push();
+    computer.sort();
+    human.sort();
+    console.log(computer.toString()+"--------"+human.toString());
+    var comp_stat = computer.every(computer_check);
+    var human_stat = human.every(human_check);
+    console.log(comp_stat+"---"+human_stat);
+    if(human_stat){
+        alert("you won the game");
+    }
+    else if(comp_stat){
+        alert("machine won the game");
+    }
+    else{
+        human_and_computer_pop();
+        document.getElementById("again").innerHTML = "Roll dice again";
+    }
+    document.getElementsByClassName("count")[0].innerHTML = "count = "+count;
+    document.getElementsByClassName("count")[1].innerHTML = "count = "+count;;
+    count=count+1;
+}    
+         
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> 
+</body>
+</html>
